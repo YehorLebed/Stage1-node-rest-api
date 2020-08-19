@@ -38,8 +38,6 @@ const router = Router();
  *         type: string
  *       creationDate:
  *         type: string
- *     examples:
- *       'application/json': { "id": 45 }
  *   HandledError:
  *     type: object
  *     required:
@@ -73,27 +71,29 @@ const router = Router();
  *             $ref: '#/definition/Post'
  *         examples:
  *           'application/json': {
- *               "posts": [
- *                   {
- *                       "id": 12,
- *                       "title": "My super new post",
- *                       "content": "Lorem lorem ipsum ipsum",
- *                       "author": "Yehor Lebid",
- *                       "creationDate": "2020-08-19T12:14:49.000Z"
- *                   },
- *                   {
- *                       "id": 13,
- *                       "title": "The ohter post",
- *                       "content": "Lorem lorem ipsum ipsum",
- *                       "author": "Artimiy",
- *                       "creationDate": "2020-08-19T12:17:19.000Z"
- *                   }
- *               ]
+ *             "posts": [
+ *               {
+ *                 "id": 12,
+ *                 "title": "My super new post",
+ *                 "content": "Lorem lorem ipsum ipsum",
+ *                 "author": "Yehor Lebid",
+ *                 "creationDate": "2020-08-19T12:14:49.000Z"
+ *               },
+ *               {
+ *                 "id": 13,
+ *                 "title": "The ohter post",
+ *                 "content": "Lorem lorem ipsum ipsum",
+ *                 "author": "Artimiy",
+ *                 "creationDate": "2020-08-19T12:17:19.000Z"
+ *               }
+ *             ]
  *           }
  *       500:
  *          description: Server error
  *          schema:
  *            $ref: '#/definition/HandledError'
+ *          examples:
+ *            'application/json': { "message": "Server error" }
  */
 router.get('/', postController.getAll);
 
@@ -120,16 +120,18 @@ router.get('/', postController.getAll);
  *            $ref: '#/definition/Post'
  *          examples:
  *            'application/json': {
- *                "id": 12,
- *                "title": "My super new post",
- *                "content": "Lorem lorem ipsum ipsum",
- *                "author": "Yehor Lebid",
- *                "creationDate": "2020-08-19T12:14:49.000Z"
+ *              "id": 12,
+ *              "title": "My super new post",
+ *              "content": "Lorem lorem ipsum ipsum",
+ *              "author": "Yehor Lebid",
+ *              "creationDate": "2020-08-19T12:14:49.000Z"
  *            }
  *        500:
  *           description: Server error
  *           schema:
  *             $ref: '#/definition/HandledError'
+ *           examples:
+ *             'application/json': { "message": "Server error" }
  */
 router.get('/:id', postController.getById);
 
@@ -153,6 +155,12 @@ router.get('/:id', postController.getById);
  *         type: object
  *         schema:
  *           $ref: '#/definition/NewPost'
+ *         examples:
+ *           'application/json': {
+ *             "title": "My super new post",
+ *             "content": "Lorem lorem ipsum ipsum",
+ *             "author": "Yehor Lebid"
+ *           }
  *      responses:
  *        201:
  *          description: post was created
@@ -197,6 +205,12 @@ router.post('/', postController.create);
  *         type: object
  *         schema:
  *           $ref: '#/definition/NewPost'
+ *         examples:
+ *           'application/json': {
+ *             "title": "My super new post",
+ *             "content": "Lorem lorem ipsum ipsum",
+ *             "author": "Yehor Lebid"
+ *           }
  *      responses:
  *        200:
  *          description: post was updated
@@ -244,7 +258,7 @@ router.put('/:id', postController.update);
  *           schema:
  *             $ref: '#/definition/HandledError'
  *           examples:
- *             'application/json': {"message": "Post does not exist"}
+ *             'application/json': { "message": "Post does not exist" }
  *        500:
  *           description: Server error
  *           schema:
