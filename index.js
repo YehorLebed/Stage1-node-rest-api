@@ -14,7 +14,7 @@ app.use(require('./middleware/authMiddleware').giveToken);
 app.use(
     '/api/posts',
     [
-        require('./middleware/authMiddleware').giveToken
+        require('./middleware/authMiddleware').checkToken
     ],
     require('./routes/post.routes')
 );
