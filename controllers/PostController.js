@@ -3,7 +3,7 @@ const PostDB = require('../models/PostDB');
 module.exports.getAll = async (req, res) => {
     try {
         const posts = await PostDB.getAll();
-        return res.status(200).json({ posts });
+        return res.status(200).json(posts);
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Error cannot get' });
@@ -14,7 +14,7 @@ module.exports.getById = async (req, res) => {
     const { id } = req.params;
     try {
         const post = await PostDB.getById(+id);
-        return res.status(200).json({ post });
+        return res.status(200).json(post);
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Error cannot get' });
@@ -46,11 +46,11 @@ module.exports.update = async (req, res) => {
         const postExists = await PostDB.getById(+id);
 
         if (!postExists) {
-            return res.status(409).json({ message: 'Post does not exist' });
+            return res.status(404).json({ message: 'Post does not exist' });
         }
 
-        const resultOfUpdate = await PostDB.update(id, post);
-        return res.status(201).json({ id, result: resultOfUpdate });
+        await PostDB.update(id, post);
+        return res.status(201).json({ id });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Error cannot update' });
