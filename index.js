@@ -59,8 +59,21 @@ app.put('/api/posts/:id', async (req, res) => {
             return res.status(409).json({ message: 'Post does not exist' });
         }
 
-        const resultOfUpdate = await PostDBController.updatePost(post);
-        return res.status(201).json({ result: resultOfUpdate });
+        // so-so
+        // let isNeedToUppdate = false;
+        // for (let key in post) {
+        //     if (post[key] !== postExists[key]) {
+        //         isNeedToUppdate = true;
+        //         break;
+        //     }
+        // }
+
+        // if(!isNeedToUppdate) {
+        //     return res.status(409).json({ message: 'Post date is equal, please send updated data' });
+        // }
+
+        const resultOfUpdate = await PostDBController.updatePost(id, post);
+        return res.status(201).json({ id, result: resultOfUpdate });
 
     } catch (error) {
         console.error(error);
@@ -68,24 +81,24 @@ app.put('/api/posts/:id', async (req, res) => {
     }
 });
 
-app.path('/api/posts/:id', async (req, res) => {
-    const { id } = req.params;
-    const post = req.body;
-    try {
-        const postExists = await PostDBController.getPostById(+id);
+// app.patch('/api/posts/:id', async (req, res) => {
+//     const { id } = req.params;
+//     const post = req.body;
+//     try {
+//         const postExists = await PostDBController.getPostById(+id);
 
-        if (!postExists) {
-            return res.status(409).json({ message: 'Post does not exist' });
-        }
+//         if (!postExists) {
+//             return res.status(409).json({ message: 'Post does not exist' });
+//         }
 
-        const resultOfUpdate = await PostDBController.updatePost(post);
-        return res.status(201).json({ result: resultOfUpdate });
+//         const resultOfUpdate = await PostDBController.updatePost(post);
+//         return res.status(201).json({ result: resultOfUpdate });
 
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'error' });
-    }
-});
+//     } catch (error) {
+//         console.error(error);
+//         return res.status(500).json({ message: 'error' });
+//     }
+// });
 
 app.delete('/api/posts/:id', async (req, res) => {
     const { id } = req.params;

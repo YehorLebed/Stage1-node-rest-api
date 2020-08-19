@@ -1,7 +1,7 @@
 const connection = require('../utils/connection');
 
 class Post {
-    constructor(id, title, content, author, creationDate) {
+    constructor({ id = null, title = null, content = null, author = null, creationDate = null }) {
         this.id = id;
         this.title = title;
         this.content = content;
