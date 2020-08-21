@@ -1,6 +1,12 @@
+const { validationResult } = require('express-validator');
 const PostDB = require('../models/PostDB');
 
 module.exports.getAll = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     try {
         const posts = await PostDB.getAll();
         return res.status(200).json(posts);
@@ -11,6 +17,11 @@ module.exports.getAll = async (req, res) => {
 }
 
 module.exports.getById = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     const { id } = req.params;
     try {
         const post = await PostDB.getById(+id);
@@ -22,6 +33,11 @@ module.exports.getById = async (req, res) => {
 }
 
 module.exports.create = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     const post = req.body;
     try {
         // ? how to understand that post already exists
@@ -40,6 +56,11 @@ module.exports.create = async (req, res) => {
 }
 
 module.exports.update = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     const { id } = req.params;
     const post = req.body;
     try {
@@ -58,6 +79,11 @@ module.exports.update = async (req, res) => {
 }
 
 module.exports.delete = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     const { id } = req.params;
     try {
         const postExists = await PostDB.getById(+id);

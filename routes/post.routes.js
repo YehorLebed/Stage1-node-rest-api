@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const { body, param, validationResult } = require('express-validator');
 const postController = require('../controllers/postController');
 const router = Router();
 
@@ -133,7 +134,13 @@ router.get('/', postController.getAll);
  *           examples:
  *             'application/json': { "message": "Server error" }
  */
-router.get('/:id', postController.getById);
+router.get(
+    '/:id',
+    [
+        param('id').toInt().isInt().if(id => id > 0)
+    ],
+    postController.getById
+);
 
 /**
  * @swagger
@@ -179,7 +186,15 @@ router.get('/:id', postController.getById);
  *           examples:
  *             'application/json': { "message": "Server error" }
  */
-router.post('/', postController.create);
+router.post(
+    '/',
+    [
+        body('title').exists().isLength({ max: 80 }),
+        body('content').exists(),
+        body('author').exists().max({ max: 40 })
+    ],
+    postController.create
+);
 
 /**
  * @swagger
@@ -229,7 +244,16 @@ router.post('/', postController.create);
  *           examples:
  *             'application/json': { "message": "Server error" }
  */
-router.put('/:id', postController.update);
+router.put(
+    '/:id',
+    [
+        param('id').toInt().isInt().if(id => id > 0),
+        body('title').exists().isLength({ max: 80 }),
+        body('content').exists(),
+        body('author').exists().max({ max: 40 })
+    ],
+    postController.update
+);
 
 /**
  * @swagger
@@ -266,6 +290,12 @@ router.put('/:id', postController.update);
  *           examples:
  *             'application/json': { "message": "Server error" }
  */
-router.delete('/:id', postController.delete);
+router.delete(
+    '/:id',
+    [
+        param('id').toInt().isInt().if(id => id > 0)
+    ],
+    postController.delete
+);
 
 module.exports = router;
