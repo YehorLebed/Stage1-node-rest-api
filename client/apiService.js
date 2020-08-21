@@ -27,6 +27,7 @@ function getHeaders(method) {
     return headers;
 }
 
+// Request functions
 export async function getPosts() {
     try {
         const headers = getHeaders();

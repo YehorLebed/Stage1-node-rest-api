@@ -12,7 +12,7 @@ function createPostHTMLElement(post) {
             <small>#${id}</small>
             <h5 class="card-title">${title}</h5>
             <p class="card-text">${content}</p>
-            <a href="#" class="btn btn-primary">${author}</a>
+            <button class="btn btn-primary">${author}</button>
             <small>${creationDate}</small>
         </div>
     </div>`;
