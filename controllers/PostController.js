@@ -65,7 +65,7 @@ module.exports.update = async (req, res) => {
     const { id } = req.params;
     const post = req.body;
     try {
-        const postExists = await PostDB.getById(+id);
+        const postExists = await PostDB.getById(id);
 
         if (!postExists) {
             return res.status(404).json({ message: 'Post does not exist' });
@@ -87,7 +87,7 @@ module.exports.delete = async (req, res) => {
 
     const { id } = req.params;
     try {
-        const postExists = await PostDB.getById(+id);
+        const postExists = await PostDB.getById(id);
 
         if (!postExists) {
             return res.status(409).json({ message: 'Post does not exist' });
