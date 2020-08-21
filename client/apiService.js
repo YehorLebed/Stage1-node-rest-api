@@ -1,18 +1,35 @@
-function handleUnathorizedError(error, fetchFunction) {
+function handleError(error) {
+    console.log(error.toJSON());
+    if (error.response.status === 401) {
+        handleUnathorizedError(error);
+        alert('Try again!')
+    }
+}
+
+function handleUnathorizedError(error) {
     if (error.response.headers['x-token'] && !localStorage.getItem('token')) {
         localStorage.setItem('token', error.response.headers['x-token']);
     }
 }
 
+function getHeaders(method) {
+    const headers = {};
+
+    const token = localStorage.getItem('token');
+    if (token) {
+        headers['x-token'] = token;
+    }
+
+    if (method === 'POST' || method === 'PUT') {
+        headers['content-type'] = 'application/json';
+    }
+
+    return headers;
+}
+
 export async function getPosts() {
     try {
-        const token = localStorage.getItem('token');
-
-        const headers = {};
-
-        if (token) {
-            headers['x-token'] = token;
-        }
+        const headers = getHeaders();
 
         const res = await axios({
             method: 'GET',
@@ -22,23 +39,13 @@ export async function getPosts() {
 
         return res.data;
     } catch (error) {
-        console.log(error.toJSON());
-        if (error.response.status === 401) {
-            handleUnathorizedError(error);
-            alert('Try again!')
-        }
+        handleError(error);
     }
 }
 
 export async function getPostById(id) {
     try {
-        const token = localStorage.getItem('token');
-
-        const headers = {};
-
-        if (token) {
-            headers['x-token'] = token;
-        }
+        const headers = getHeaders();
 
         const res = await axios({
             method: 'GET',
@@ -48,25 +55,13 @@ export async function getPostById(id) {
 
         return res.data;
     } catch (error) {
-        console.log(error.toJSON());
-        if (error.response.status === 401) {
-            handleUnathorizedError(error);
-            alert('Try again!')
-        }
+        handleError(error);
     }
 }
 
 export async function createPost(post) {
     try {
-        const token = localStorage.getItem('token');
-
-        const headers = {
-            'content-type': 'application/json'
-        };
-
-        if (token) {
-            headers['x-token'] = token;
-        }
+        const headers = getHeaders('POST')
 
         const res = await axios({
             method: 'POST',
@@ -77,25 +72,13 @@ export async function createPost(post) {
 
         return res.data;
     } catch (error) {
-        console.log(error.toJSON());
-        if (error.response.status === 401) {
-            handleUnathorizedError(error);
-            alert('Try again!')
-        }
+        handleError(error);
     }
 }
 
 export async function updatePostById(id, post) {
     try {
-        const token = localStorage.getItem('token');
-
-        const headers = {
-            'content-type': 'application/json'
-        };
-
-        if (token) {
-            headers['x-token'] = token;
-        }
+        const headers = getHeaders('PUT');
 
         const res = await axios({
             method: 'PUT',
@@ -106,25 +89,13 @@ export async function updatePostById(id, post) {
 
         return res.data;
     } catch (error) {
-        console.log(error.toJSON());
-        if (error.response.status === 401) {
-            handleUnathorizedError(error);
-            alert('Try again!')
-        }
+        handleError(error);
     }
 }
 
 export async function deletePostById(id) {
     try {
-        const token = localStorage.getItem('token');
-
-        const headers = {
-            'content-type': 'application/json'
-        };
-
-        if (token) {
-            headers['x-token'] = token;
-        }
+        const headers = getHeaders();
 
         const res = await axios({
             method: 'DELETE',
@@ -134,10 +105,6 @@ export async function deletePostById(id) {
 
         return res.data;
     } catch (error) {
-        console.log(error.toJSON());
-        if (error.response.status === 401) {
-            handleUnathorizedError(error);
-            alert('Try again!')
-        }
+        handleError(error);
     }
 }
