@@ -137,7 +137,7 @@ router.get('/', postController.getAll);
 router.get(
     '/:id',
     [
-        param('id').toInt().isInt().if(id => id > 0)
+        param('id').toInt().isInt({ min: 1 })
     ],
     postController.getById
 );
@@ -191,7 +191,7 @@ router.post(
     [
         body('title').exists().isLength({ max: 80 }),
         body('content').exists(),
-        body('author').exists().max({ max: 40 })
+        body('author').exists().isLength({ max: 40 })
     ],
     postController.create
 );
@@ -250,7 +250,7 @@ router.put(
         param('id').toInt().isInt().if(id => id > 0),
         body('title').exists().isLength({ max: 80 }),
         body('content').exists(),
-        body('author').exists().max({ max: 40 })
+        body('author').exists().isLength({ max: 40 })
     ],
     postController.update
 );

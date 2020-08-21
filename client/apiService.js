@@ -22,7 +22,7 @@ export async function getPosts() {
 
         return res.data;
     } catch (error) {
-        console.log(error);
+        console.log(error.toJSON());
         if (error.response.status === 401) {
             handleUnathorizedError(error);
             alert('Try again!')
@@ -48,7 +48,7 @@ export async function getPostById(id) {
 
         return res.data;
     } catch (error) {
-        console.log(error);
+        console.log(error.toJSON());
         if (error.response.status === 401) {
             handleUnathorizedError(error);
             alert('Try again!')
@@ -77,7 +77,7 @@ export async function createPost(post) {
 
         return res.data;
     } catch (error) {
-        console.log(error);
+        console.log(error.toJSON());
         if (error.response.status === 401) {
             handleUnathorizedError(error);
             alert('Try again!')
@@ -106,7 +106,7 @@ export async function updatePostById(id, post) {
 
         return res.data;
     } catch (error) {
-        console.log(error);
+        console.log(error.toJSON());
         if (error.response.status === 401) {
             handleUnathorizedError(error);
             alert('Try again!')
@@ -134,7 +134,7 @@ export async function deletePostById(id) {
 
         return res.data;
     } catch (error) {
-        console.log(error);
+        console.log(error.toJSON());
         if (error.response.status === 401) {
             handleUnathorizedError(error);
             alert('Try again!')

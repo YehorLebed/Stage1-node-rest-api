@@ -24,7 +24,8 @@ module.exports.getById = async (req, res) => {
 
     const { id } = req.params;
     try {
-        const post = await PostDB.getById(+id);
+        console.log(id);
+        const post = await PostDB.getById(id);
         return res.status(200).json(post);
     } catch (error) {
         console.error(error);

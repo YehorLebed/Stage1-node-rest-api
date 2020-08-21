@@ -21,7 +21,7 @@ class PostDB {
             const query = 'SELECT id, title, content, author, creationDate FROM post WHERE id = ?';
             const res = await connection.promise().execute(query, [id]);
 
-            return res[0][0];
+            return res[0][0] || null;
         } catch (error) {
             console.error('Database error');
             throw error;
@@ -34,7 +34,7 @@ class PostDB {
             const query = 'SELECT id, title, content, author, creationDate FROM post WHERE title = ? AND author = ?';
             const res = await connection.promise().execute(query, [title, author]);
 
-            return res[0][0];
+            return res[0][0] || null;
         } catch (error) {
             console.error('Database error');
             throw error;

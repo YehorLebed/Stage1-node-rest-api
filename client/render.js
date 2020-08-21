@@ -18,7 +18,7 @@ function createPostHTMLElement(post) {
     </div>`;
 }
 
-export function renderFormCreatePost(parent, { title, content, author }) {
+export function renderFormCreatePost(parent, { title, content, author } = {}) {
     parent.innerHTML = `
     <h2>Form:</h2>
     <form>
@@ -29,7 +29,7 @@ export function renderFormCreatePost(parent, { title, content, author }) {
 
         <div class="form-group">
             <label for="content">Content</label>
-            <textarea class="form-control" id="content">${content}</textarea>
+            <textarea class="form-control" id="content">${content || ''}</textarea>
         </div>
 
         <div class="form-group">
